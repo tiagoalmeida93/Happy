@@ -17,10 +17,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "./src/ts/**/*"
+    "src"
   ]
 }
