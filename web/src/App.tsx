@@ -1,19 +1,15 @@
 import React from 'react';
 
-interface TitleProps {
-  text: string;
-}
+import './styles/pages/landing.css'
 
-function Title(props: TitleProps) {
-  return (
-    <h1>Hi {props.text}</h1>
-  )
-}
+import logoImg from './images/logo.svg'
 
 function App() {
   return (
-    <div className="App">
-      <Title text="Tiago" />
+    <div id="page-landing">
+      <div className="content">
+        <img src={logoImg} alt="Happy"/>
+      </div>
     </div>
   );
 }
