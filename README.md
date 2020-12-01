@@ -54,4 +54,7 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 
 ---
 
-Feito com ♥ by Tiago Almeida :wave:
+<h1 align="center">
+    Feito com ♥ by Tiago Almeida :wave:
+</h1>
+
