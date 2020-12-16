@@ -2,8 +2,10 @@ import express from 'express'
 
 const app = express();
 
-app.get('/users', (req, res) => {
+app.get('/users/:id', (req, res) => {
   console.log(req.query);
+  console.log(req.params);
+  
   return res.json({ message: "Hello" })
 })
 
