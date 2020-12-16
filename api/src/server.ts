@@ -2,9 +2,13 @@ import express from 'express'
 
 const app = express();
 
-app.get('/users/:id', (req, res) => {
+app.use(express.json())
+
+app.post('/users/:id', (req, res) => {
   console.log(req.query);
   console.log(req.params);
+  console.log(req.body);
+  
   
   return res.json({ message: "Hello" })
 })
