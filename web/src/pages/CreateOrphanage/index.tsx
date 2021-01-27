@@ -4,10 +4,10 @@ import { Marker } from 'react-leaflet';
 import PrimaryButton from "../../components/PrimaryButton";
 import Sidebar from "../../components/Sidebar";
 
-import './styles.css';
 import { FiPlus } from "react-icons/fi";
 import Map from "../../components/Map";
 import happyMapIcon from "../../components/Map/happMapIcon";
+import './styles.css';
 
 export default function OrphanagesMap() {
   return (

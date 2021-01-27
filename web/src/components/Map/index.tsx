@@ -9,7 +9,7 @@ interface MapProps extends LeafletMapProps {
 export default function Map({ children, interactive = true, ...props }: MapProps) {
   return (
     <LeafletMap 
-      center={[-27.2092052,-49.6401092]} 
+      center={[-22.48037,-48.5784707]} 
       zoom={15} 
       style={{ width: '100%', height: '100%' }}
       dragging={interactive}
