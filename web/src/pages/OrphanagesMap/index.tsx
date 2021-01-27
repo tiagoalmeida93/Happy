@@ -1,11 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiPlus } from 'react-icons/fi';
-import { Map, TileLayer, Marker } from 'react-leaflet';
-import mapMarkerImg from '../../images/map-market.svg';
+import { FiArrowRight, FiPlus } from 'react-icons/fi';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+
+import mapMarkerImg from '../../assets/images/map-marker.svg';
+
+import Leaflet from 'leaflet';
 
 import 'leaflet/dist/leaflet.css'
 import './styles.css';
+
+const mapIcon = Leaflet.icon({
+  iconUrl: mapMarkerImg,
+  iconSize: [58, 68],
+  iconAnchor: [29, 68],
+  popupAnchor: [170, 2]
+})
 
 const OrphanagesMap: React.FC = () => {
   return (
@@ -34,8 +44,16 @@ const OrphanagesMap: React.FC = () => {
         />
 
         <Marker
+          icon={mapIcon}
           position={[-22.480308, -48.572792]}
-        />
+        >
+          <Popup closeButton={false} minWidth={240} maxWidth={240} className="map-popup">
+            Lar das crianças
+            <Link to="">
+              <FiArrowRight size={20} color="#FFF" />
+            </Link>
+          </Popup>
+        </Marker>
       </Map>
 
       <Link to="" className="create-orphanage">
