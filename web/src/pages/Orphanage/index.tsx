@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
-import { FiClock, FiInfo } from "react-icons/fi";
+import { FiClock } from "react-icons/fi";
+import { useParams } from "react-router-dom";
 import { Marker } from "react-leaflet";
 import L from 'leaflet';
 
 import mapMarkerImg from "../../assets/images/map-marker.svg";
 
-import PrimaryButton from "../../components/PrimaryButton";
+//import PrimaryButton from "../../components/PrimaryButton";
 import Sidebar from "../../components/Sidebar";
-
+import Card from "../../components/Card";
 import Map from "../../components/Map";
 
 import './styles.css';
@@ -26,20 +26,28 @@ interface Orphanage {
   name: string;
   latitude: number;
   longitude: number;
-  description: string;
+  about: string;
   instructions: string;
   opening_hours: string;
   open_on_weekends: string;
+  images: Array<{
+    url: string;
+  }>
+}
+
+interface OrphanageParams {
+  id: string;
 }
 
 export default function Orphanage() {
+  const params = useParams<OrphanageParams>();
   const [orphanage, setOrphanage] = useState<Orphanage>();
 
   useEffect(() => {
-    api.get('orphanages').then(response => {
+    api.get(`orphanages/${params.id}`).then(response => {
       setOrphanage(response.data)
     })
-  }, []);
+  }, [params.id]);
 
   if (!orphanage) {
     return <p>Carregando...</p>
@@ -51,7 +59,7 @@ export default function Orphanage() {
 
       <main>
         <div className="orphanage-details">
-          <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
+          <img src={orphanage.images[0].url} alt={orphanage.name} />
 
           <div className="images">
             <button className="active" type="button">
@@ -75,17 +83,17 @@ export default function Orphanage() {
           </div>
           
           <div className="orphanage-details-content">
-            <h1>Lar das meninas</h1>
-            <p>Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social.</p>
+            <h1>{orphanage.name}</h1>
+            <p>{orphanage.about}</p>
 
             <div className="map-container">
               <Map 
                 interactive={false}
-                center={[-27.2092052,-49.6401092]} 
+                center={[orphanage.latitude,orphanage.longitude]} 
                 zoom={16} 
                 style={{ width: '100%', height: 280 }}
               >
-                <Marker interactive={false} icon={happyMapIcon} position={[-27.2092052,-49.6401092]} />
+                <Marker interactive={false} icon={happyMapIcon} position={[orphanage.latitude,orphanage.longitude]} />
               </Map>
 
               <footer>
@@ -96,25 +104,23 @@ export default function Orphanage() {
             <hr />
 
             <h2>Instruções para visita</h2>
-            <p>Venha como se sentir mais à vontade e traga muito amor para dar.</p>
+            <p>{orphanage.instructions}</p>
 
             <div className="open-details">
               <div className="hour">
                 <FiClock size={32} color="#15B6D6" />
                 Segunda à Sexta <br />
-                8h às 18h
+                {orphanage.opening_hours}
               </div>
-              <div className="open-on-weekends">
-                <FiInfo size={32} color="#39CC83" />
-                Atendemos <br />
-                fim de semana
-              </div>
+              <Card
+                open={orphanage.open_on_weekends}
+              />
             </div>
 
-            <PrimaryButton type="button">
+            {/* <PrimaryButton type="button">
               <FaWhatsapp size={20} color="#FFF" />
               Entrar em contato
-            </PrimaryButton>
+            </PrimaryButton> */}
           </div>
         </div>
       </main>
