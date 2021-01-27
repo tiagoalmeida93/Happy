@@ -1,7 +1,7 @@
 import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo } from "react-icons/fi";
-import { Marker, TileLayer } from "react-leaflet";
+import { Marker } from "react-leaflet";
 import L from 'leaflet';
 
 import mapMarkerImg from "../../assets/images/map-marker.svg";
@@ -66,7 +66,7 @@ export default function Orphanage() {
               </Map>
 
               <footer>
-                <a href="">Ver rotas no Google Maps</a>
+                <a href="!#">Ver rotas no Google Maps</a>
               </footer>
             </div>
 
