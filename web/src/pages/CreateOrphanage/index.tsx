@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Marker } from 'react-leaflet';
-
+import { LeafletMouseEvent } from 'leaflet';
 import PrimaryButton from "../../components/PrimaryButton";
 import Sidebar from "../../components/Sidebar";
 
@@ -10,6 +10,14 @@ import happyMapIcon from "../../components/Map/happMapIcon";
 import './styles.css';
 
 export default function OrphanagesMap() {
+  const [latLng, setLatLng] = useState({ latitude: 0, longitude: 0 });
+
+  function handleMapClick(e: LeafletMouseEvent) {
+    const {lat, lng} = e.latlng;
+    
+    setLatLng({ latitude: lat, longitude: lng });
+  }
+
   return (
     <div id="page-create-orphanage">
       <Sidebar />
@@ -19,8 +27,22 @@ export default function OrphanagesMap() {
           <fieldset>
             <legend>Dados</legend>
 
-            <Map style={{ width: '100%', height: 280 }}>
-              <Marker interactive={false} icon={happyMapIcon} position={[-27.2092052,-49.6401092]} />
+            <Map 
+              center={[-22.4616235,-48.5677993]}
+              style={{ width: '100%', height: 280 }}
+              zoom={15}
+              onclick={handleMapClick}
+            >
+              {latLng.latitude !== 0 && (
+                <Marker 
+                  interactive={false} 
+                  icon={happyMapIcon} 
+                  position={[
+                    latLng.latitude,
+                    latLng.longitude
+                  ]} 
+                />
+              )}
             </Map>
 
             <div className="input-block">
