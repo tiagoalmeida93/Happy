@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import Orphanage from "../models/Orphanage";
 import orphanagesView from "../views/orphanages_view";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 export default {
   async index(req: Request, res: Response) {
     const orphanagesRepository = getRepository(Orphanage);
 
     const orphanages = await orphanagesRepository.find({
-      relations: ['images']
+      relations: ["images"],
     });
 
     return res.json(orphanagesView.renderMany(orphanages));
@@ -21,7 +21,7 @@ export default {
     const orphanagesRepository = getRepository(Orphanage);
 
     const orphanage = await orphanagesRepository.findOneOrFail(id, {
-      relations: ['images']
+      relations: ["images"],
     });
 
     return res.json(orphanagesView.render(orphanage));
@@ -41,8 +41,8 @@ export default {
     const orphanagesRepository = getRepository(Orphanage);
 
     const requestImages = req.files as Express.Multer.File[];
-    const images = requestImages.map(image => {
-      return { path: image.filename }
+    const images = requestImages.map((image) => {
+      return { path: image.filename };
     });
 
     const data = {
@@ -52,8 +52,8 @@ export default {
       about,
       instructions,
       opening_hours,
-      open_on_weekends,
-      images
+      open_on_weekends: open_on_weekends === "true",
+      images,
     };
 
     const schema = Yup.object().shape({
@@ -66,14 +66,14 @@ export default {
       open_on_weekends: Yup.boolean().required(),
       images: Yup.array(
         Yup.object().shape({
-          path: Yup.string().required()
+          path: Yup.string().required(),
         })
-      )
+      ),
     });
 
     await schema.validate(data, {
       abortEarly: false,
-    })
+    });
 
     const orphanage = orphanagesRepository.create(data);
 
